@@ -1,0 +1,25 @@
+{
+  "name": "otro_rag",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "@pinecone-database/pinecone": "0.1.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "langchain": "0.0.75",
+    "multer": "^1.4.5-lts.1",
+    "pdf-parse": "^1.1.1"
+  }
+}
