@@ -57,7 +57,6 @@ def retrieve_and_output():
             api_key=os.getenv("PINECONE_API_KEY"),
             environment=os.getenv("PINECONE_ENVIRONMENT"),
         )
-        # index = pinecone.Index(content['indexName'])
 
         # Retriever
         vector_store = Pinecone.from_existing_index(
@@ -68,7 +67,7 @@ def retrieve_and_output():
 
         # Build question prompt
         question_prompt = build_question_prompt()
-        question = question_prompt.format(question = content["question"])
+        question = question_prompt.format(question=content["question"])
 
         # Call to OpenAI
         answer = chain.run(question)
