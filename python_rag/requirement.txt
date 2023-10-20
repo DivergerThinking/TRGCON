@@ -1,0 +1,12 @@
+flask
+pinecone-client
+python-dotenv
+langchain
+pypdf
+fastapi
+uvicorn
+python-multipart
+unstructured
+"unstructured[pdf]"
+openai
+tiktoken
