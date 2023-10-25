@@ -25,6 +25,8 @@ QA_PROMPT = PromptTemplate(template=QA_PROMPT, input_variables=["context", "ques
 
 
 # Retriever
+if not os.getenv("OPENAI_API_KEY"):
+    raise Exception("Enviroment variable OPENAI_API_KEY not set.")
 def make_chain(retriever):
     return RetrievalQA.from_llm(
         llm=ChatOpenAI(
@@ -47,6 +49,13 @@ def build_question_prompt():
 
 @retrieval_and_output_bp.route("/", methods=["POST"])
 def retrieve_and_output():
+    """Retrieve context and call LLM. Caveats:
+    - The request endpoint must have the final slash (i.e. .../retrieval-and-output/)
+    - The "indexName" and "question" must be in the request body as a raw JSON (e.g. {
+        "indexName": "yourindexname",
+        "question": "your question"
+        })
+    """
     try:
         content = request.get_json()
         if not content or "indexName" not in content or "question" not in content:

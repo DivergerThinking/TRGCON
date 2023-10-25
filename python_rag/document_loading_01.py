@@ -12,6 +12,8 @@ load_dotenv()
 ALLOWED_EXTENSIONS = {"txt", "pdf"}
 
 # Pinecone client instance
+if not os.getenv("PINECONE_API_KEY"):
+    raise Exception("Enviroment variable PINECONE_API_KEY not set.")
 pinecone.init(
     api_key=os.getenv("PINECONE_API_KEY"), environment=os.getenv("PINECONE_ENVIRONMENT")
 )
@@ -25,6 +27,10 @@ def allowed_file(filename):
 
 @document_loading_bp.route("/", methods=["POST"])
 def upload_file():
+    """File upload to documents folder and Pinecone index creation. Caveats:
+    - The request endpoint must have the final slash (i.e. .../document-loading/)
+    - The file must be uploaded at the request body as a 'form-data' file called 'file'
+    """
     if "file" not in request.files:
         return jsonify(error="No file part"), 400
     file = request.files["file"]
