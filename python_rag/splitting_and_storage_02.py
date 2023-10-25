@@ -11,11 +11,20 @@ from langchain.vectorstores.pinecone import Pinecone
 # Load environment variables
 load_dotenv()
 
+if not os.getenv("PINECONE_API_KEY"):
+    raise Exception("Enviroment variable PINECONE_API_KEY not set.")
+if not os.getenv("PINECONE_ENVIRONMENT"):
+    raise Exception("Enviroment variable PINECONE_ENVIRONMENT not set.")
+
 splitt_and_store_bp = Blueprint("splitt_and_store", __name__)
 
 
 @splitt_and_store_bp.route("/", methods=["POST"])
 def process_document():
+    """Split document and loading into pinecone index. Caveats:
+    - The request endpoint must have the final slash (i.e. .../splitting-and-storage/)
+    - The "indexName" must be in the request body as a raw JSON (e.g. {"indexName": "yourindexname"})
+    """
     try:
         content = request.get_json()
         if not content or "indexName" not in content:
