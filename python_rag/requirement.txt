@@ -7,6 +7,6 @@ fastapi
 uvicorn
 python-multipart
 unstructured
-"unstructured[pdf]"
+unstructured[pdf]
 openai
 tiktoken
